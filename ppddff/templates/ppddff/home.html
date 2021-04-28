@@ -130,7 +130,10 @@
                 a = document.getElementById('itemtable').style.display
                 item = document.getElementById('item').value
                 price = document.getElementById('price').value
+                price = Float.parseFloat(price);
+
                 qty = document.getElementById('qty').value
+                qty = Float.parseFloat(qty);
                 if(a == 'none' && item != '' && price != '' && qty!=''){
                     document.getElementById('itemtable').style.display = 'block'
                 }
