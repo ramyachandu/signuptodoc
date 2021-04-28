@@ -10,67 +10,105 @@
         <script src="{% static '/js/city.js' %}"></script>
     </head>
     <body>
-        <div class="container" style="margin-top: 10%">
+        <div class="container">
             <div class="row">
-                <div class="col-6 offset-3" style="border: 1px solid black;border-radius:5px;padding: 2%;">
-                    <form>
-                        <div class="text-center">
-                            <h3>User Deatils</h3>
-                        </div>
-                        <div class="form-row">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputName4">Name</label>
-                                    <input type="text" class="form-control" id="inputName4" placeholder="Name">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputSurname4">Surname</label>
-                                    <input type="text" class="form-control" id="inputSurname4" placeholder="Surname">
-                                </div>
+                <div class="col-12">
+                    <div class="text-center">
+                        <h2>Invoice</h2>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid black;">
+                            <strong>FROM:</strong>
+                            <br>
+                            <div class="form-group">
+                                <label for="inputName4">Your Name</label>
+                                <input type="text" class="form-control" id="inputName4" placeholder="Your Name">
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputMobile4">Mobile No</label>
-                                    <input type="text" class="form-control" id="inputMobile4" placeholder="Mobile No">
-                                </div>
+                            <div class="form-group ">
+                                <label for="mobile">Phone number</label>
+                                <input type="text" class="form-control" id="mobile" placeholder="Phone number">
                             </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="inputAddress">Address</label>
-                          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                        </div>
-                        <div class="form-group">
-                          <label for="inputAddress2">Address 2</label>
-                          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                        </div>
-                        <div class="form-row">
-                          <div class="row">
-                            <div class="form-group col-md-5">
+                            <div class="form-group ">
+                                <label for="inputAddress">Address1</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                            </div>
+                            <div class="form-group ">                           
+                                <label for="inputAddress2">Address 2</label>
+                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                            </div>
+                            <div class="form-group">
                                 <label for="inputState">State</label>
                                 <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group">
                                 <label for="inputCity">City</label>
                                 <select id ="state" class="form-control" required></select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip">
-                            </div>
-                          </div>
+                            </div>    
                         </div>
-                        <br>
-                        <button type="button" class="btn btn-primary" onclick="fun()">Sign in</button>
-                      </form>
-                </div>
+                        <div class="col-6">
+                            <strong>Invoice Details:</strong><br>
+                            <div class="form-group">
+                                <label for="invoiceid">Invoice ID</label>
+                                <input type="text" class="form-control" id="invoiceid" placeholder="Invoice ID">
+                            </div>
+                            <div class="form-group ">
+                                <label for="issuedate">Issue Date</label>
+                                <input type="text" class="form-control" id="issuedate" placeholder="Issue Date">
+                            </div>
+                            <div class="form-group ">
+                                <label for="date">Due Date</label>
+                                <input type="date" class="form-control" id="date" placeholder="Date">
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
             </div>
         </div>
+        <div class="container">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <br>
+                            <tr>
+                                <td><strong>Item</strong>
+                                    <input type="text" class="form-control" id="item" placeholder="Item">
+                                </td>
+                                <td class="text-center"><strong>Price</strong>
+                                  <input type="text" class="form-control" id="price" placeholder="Price">
+                                </td>
+                                <td class="text-center"><strong>Quantity</strong>
+                                    <input type="text" class="form-control" id="qty" placeholder="Quantity">
+                                </td>
+                                <td><button onclick="add()" type="button" class="btn btn-primary">Add</button></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="table-responsive" id='itemtable' style="display: none;">  
+                    <table class="table table-condensed">
+                        <thead>
+                            <td>S No</td>
+                            <td>Item</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Amount</td>
+                            <td>Remove</td>
+                        </thead>
+                        <tbody id="cont">
+                        </tbody>
+                    </table>
+                    <div style="text-align: right;">
+                        Total amount: <b id='tamount'></b>
+                    </div>
+                </div>
+            </div>
+        </div>         
+                    
         <script language="javascript">
-            
+            count = 0
+            tamount = 0
             print_state("sts");
             function fun() {
                 console.log('hi')
@@ -87,6 +125,37 @@
                 x+='Pincode: '+document.getElementById('inputZip').value+'\n'
                 doc.text(10, 10, x);
                 doc.save(document.getElementById('inputSurname4').value+' '+document.getElementById('inputName4').value+'.pdf');
+            }
+            function add() {
+                a = document.getElementById('itemtable').style.display
+                item = document.getElementById('item').value
+                price = document.getElementById('price').value
+                qty = document.getElementById('qty').value
+                if(a == 'none' && item != '' && price != '' && qty!=''){
+                    document.getElementById('itemtable').style.display = 'block'
+                }
+                if(item != '' && price != '' && qty!=''){
+                    count+=1
+                    x = '<tr id="'+count+'"><td>'+count+'</td><td>'+item+'</td><td>'+price+'</td><td>'+qty+'</td><td id="a'+count+'">'+price*qty+'</td>'
+                    x += '<td><button type="button" class="btn btn-warning" onclick="del('+count+')">'
+                    x+='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>'
+                    x+= '</button><td></tr>'
+                    tamount += price*qty
+                    temp = document.getElementById('cont').innerHTML
+                    document.getElementById('cont').innerHTML = temp+x
+                    document.getElementById('tamount').innerText = tamount
+                }
+            }
+            function del(x) {
+                console.log(x)
+                amt = document.getElementById('a'+x).innerText
+                console.log(amt)
+                document.getElementById(x).remove();
+                tamount -= amt
+                document.getElementById('tamount').innerText = tamount
+                if(tamount == 0){
+                    document.getElementById('itemtable').style.display = 'none'
+                }
             }
         </script>
     </body>
